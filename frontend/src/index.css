@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background-color: #476db5;
+  /* Use a rounded font if possible */
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.04em;
+}
+

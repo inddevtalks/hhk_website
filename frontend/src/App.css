@@ -1,0 +1,23 @@
+.excel-header {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.excel-header:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* This highlights the selected row on the side */
+.ag-row-selected {
+  background-color: #e0f2fe !important;
+}
+
+.btn-reset {
+  margin-left: auto;
+  padding: 5px 12px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+}
