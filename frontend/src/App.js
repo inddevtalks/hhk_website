@@ -16,7 +16,7 @@ const Navbar = () => {
         </div>
         <div className="hidden lg:flex items-center gap-10">
           {navLinks.map((name) => (
-            <a key={name} href="#" className="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-white transition-colors">{name}</a>
+            <a key={name} href="#" className="text-[12px] font-bold uppercase tracking-[0.2em] hover:text-white transition-colors">{name}</a>
           ))}
         </div>
         <Menu className="lg:hidden w-6 h-6 text-[#ffb923]" />
@@ -29,55 +29,27 @@ const App = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const steps = [
-    { 
-      id: 1, 
-      title: "THE PROBLEM", 
-      desc: "KIDS ON STREETS", 
-      detail: "Thousands of children live and work on the streets, deprived of safety, dignity, and their basic right to education. They are often trapped in a cycle of poverty that seems impossible to break without external intervention.", 
-      img: "https://cdn-icons-png.flaticon.com/512/4295/4295903.png" 
-    },
-    { 
-      id: 2, 
-      title: "IDENTIFYING", 
-      desc: "THE MISSING VOICES", 
-      detail: "We meet children on the streets who often have no identity—some don't even have names or birth certificates. Our first step is recognizing them as individuals with potential and documenting their existence.", 
-      img: "https://cdn-icons-png.flaticon.com/512/3521/3521101.png" 
-    },
-    { 
-      id: 3, 
-      title: "ENROLLING", 
-      desc: "THE SCHOOL BRIDGE", 
-      detail: "We bridge the gap to enroll them in formal education systems. This involves navigating complex paperwork and preparing the child psychologically to transition from the street to a structured classroom environment.", 
-      img: "https://cdn-icons-png.flaticon.com/512/2855/2855260.png" 
-    },
-    { 
-      id: 4, 
-      title: "THE BARRIERS", 
-      desc: "SOCIAL STIGMA", 
-      detail: "Schools and society often judge them for their past, their clothes, or their lifestyle. These barriers often break their spirit at the school gates, making it difficult for them to stay enrolled without our constant support.", 
-      img: "https://cdn-icons-png.flaticon.com/512/6254/6254441.png" 
-    },
-    { 
-      id: 5, 
-      title: "OUR PATHWAYS", 
-      desc: "THE SUSTAINABLE SOLUTION", 
-      detail: "We created unique programs to walk beside them. We don't just enroll them; we mentor them, support their families, and ensure the community becomes a safe space for their growth and long-term success.", 
-      img: "https://cdn-icons-png.flaticon.com/512/3233/3233486.png" 
-    },
+    { id: 1, title: "THE PROBLEM", desc: "KIDS ON STREETS", detail: "Thousands of children live and work on the streets, deprived of safety, dignity, and their basic right to education. They are often trapped in a cycle of poverty that seems impossible to break without external intervention.", img: "https://cdn-icons-png.flaticon.com/512/4295/4295903.png" },
+    { id: 2, title: "IDENTIFYING", desc: "THE MISSING VOICES", detail: "We meet children on the streets who often have no identity—some don't even have names or birth certificates. Our first step is recognizing them as individuals with potential and documenting their existence.", img: "https://cdn-icons-png.flaticon.com/512/3521/3521101.png" },
+    { id: 3, title: "ENROLLING", desc: "THE SCHOOL BRIDGE", detail: "We bridge the gap to enroll them in formal education systems. This involves navigating complex paperwork and preparing the child psychologically to transition from the street to a structured classroom environment.", img: "https://cdn-icons-png.flaticon.com/512/2855/2855260.png" },
+    { id: 4, title: "THE BARRIERS", desc: "SOCIAL STIGMA", detail: "Schools and society often judge them for their past, their clothes, or their lifestyle. These barriers often break their spirit at the school gates, making it difficult for them to stay enrolled without our constant support.", img: "https://cdn-icons-png.flaticon.com/512/6254/6254441.png" },
+    { id: 5, title: "OUR PATHWAYS", desc: "THE SUSTAINABLE SOLUTION", detail: "We created unique programs to walk beside them. We don't just enroll them; we mentor them, support their families, and ensure the community becomes a safe space for their growth and long-term success.", img: "https://cdn-icons-png.flaticon.com/512/3233/3233486.png" },
   ];
 
   const partners = ["UNICEF", "TATA TRUSTS", "HDFC BANK", "RELIANCE", "INFOSYS", "GIVE INDIA"];
 
   return (
-    <div className="min-h-screen bg-[#ffb923] font-sans selection:bg-[#030fe0] selection:text-white text-[#030fe0] overflow-x-hidden">
+    <div className="min-h-screen bg-[#ffb923] font-sans selection:bg-[#030fe0] selection:text-white text-[#030fe0] overflow-x-hidden w-full">
       <Navbar />
 
-      {/* HERO VIDEO SECTION */}
+      {/* HERO VIDEO SECTION - FIXED MOBILE DISCOLORATION */}
       <section className="w-full h-[50vh] md:h-[75vh] bg-black relative mt-16 overflow-hidden group border-b-2 border-[#030fe0]/10">
         {!isPlaying ? (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer px-4" onClick={() => setIsPlaying(true)}>
-            <div className="absolute inset-0 bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105" 
-                 style={{ backgroundImage: `url('https://i.ytimg.com/vi/Y6aC43IODlg/maxresdefault.jpg')` }}></div>
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer" onClick={() => setIsPlaying(true)}>
+            <div className="absolute inset-0 bg-black">
+              <div className="w-full h-full bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000" 
+                   style={{ backgroundImage: `url('https://i.ytimg.com/vi/Y6aC43IODlg/maxresdefault.jpg')` }}></div>
+            </div>
             <div className="relative z-20 flex flex-col items-center gap-4">
               <div className="w-16 h-16 md:w-24 md:h-24 bg-[#030fe0] text-[#ffb923] rounded-full flex items-center justify-center shadow-2xl border-2 border-[#ffb923]/30 transform group-hover:scale-110 transition-transform">
                 <Play size={32} className="ml-1" fill="currentColor" />
@@ -98,18 +70,15 @@ const App = () => {
         <p className="mt-6 text-[10px] font-bold tracking-[0.5em] uppercase opacity-60">Har Hath Kalam India Association</p>
       </section>
 
-      {/* SNAKE ROADMAP */}
+      {/* SNAKE ROADMAP - STABILIZED FOR MOBILE */}
       <div className="max-w-5xl mx-auto py-12 md:py-20 px-8 relative">
+        {/* Desktop SVG */}
         <svg className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 1000 1500" preserveAspectRatio="none">
-          <path 
-            d="M 500 50 C 950 50, 950 300, 500 300 C 50 300, 50 550, 500 550 C 950 550, 950 800, 500 800 C 50 800, 50 1050, 500 1050 L 500 1250" 
-            fill="none" 
-            stroke="#030fe0" 
-            strokeWidth="4" 
-            strokeDasharray="15 15" 
-            className="opacity-20"
-          />
+          <path d="M 500 50 C 950 50, 950 300, 500 300 C 50 300, 50 550, 500 550 C 950 550, 950 800, 500 800 C 50 800, 50 1050, 500 1050 L 500 1250" fill="none" stroke="#030fe0" strokeWidth="4" strokeDasharray="15 15" className="opacity-20" />
         </svg>
+
+        {/* Mobile Connector Line */}
+        <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px border-l-2 border-dashed border-[#030fe0] opacity-20"></div>
 
         {steps.map((step, index) => (
           <div key={step.id} className={`flex flex-col md:flex-row items-center mb-28 md:mb-44 relative ${index % 2 !== 0 ? 'md:flex-row-reverse text-center md:text-right' : 'text-center md:text-left'}`}>
@@ -143,24 +112,8 @@ const App = () => {
           <h2 className="text-center text-3xl md:text-4xl font-black tracking-widest uppercase mb-16 underline decoration-4 underline-offset-8">OUR CORE PROGRAMS</h2>
           <div className="grid lg:grid-cols-2 gap-10">
             {[
-              { 
-                name: "BUNIYAAD", 
-                sub: "Learning Centre Program", 
-                items: [
-                  "Bridge education program specifically for children who are unable to attend formal schools.",
-                  "Establishing safe learning spaces, libraries, and classrooms right where the children are.",
-                  "Holistic development to prepare children for meaningful careers and social integration."
-                ] 
-              },
-              { 
-                name: "MERI KITAB", 
-                sub: "Community Learning Program", 
-                items: [
-                  "Bringing education to the heart of communities through interactive readings and theatre.",
-                  "Working closely with parents to build a supportive home environment for learning.",
-                  "Empowering the entire community to take ownership of their children's educational journey."
-                ] 
-              }
+              { name: "BUNIYAAD", sub: "Learning Centre Program", items: ["Bridge education program specifically for children who are unable to attend formal schools.", "Establishing safe learning spaces, libraries, and classrooms right where the children are.", "Holistic development to prepare children for meaningful careers and social integration."] },
+              { name: "MERI KITAB", sub: "Community Learning Program", items: ["Bringing education to the heart of communities through interactive readings and theatre.", "Working closely with parents to build a supportive home environment for learning.", "Empowering the entire community to take ownership of their children's educational journey."] }
             ].map((prog, idx) => (
               <div key={idx} className="bg-white p-10 md:p-14 rounded-[3rem] md:rounded-[4rem] border-[3px] border-[#030fe0] shadow-2xl hover:-translate-y-3 transition-transform duration-500">
                 <h2 className="text-4xl md:text-5xl font-black mb-1">{prog.name}</h2>
@@ -180,6 +133,7 @@ const App = () => {
 
       {/* PARTNERS */}
       <section className="bg-[#030fe0] py-16 md:py-24 overflow-hidden border-y border-white/10">
+      <p className="text-center text-[#ffb923] text-2xl md:text-3xl font-black mb-16 tracking-[0.4em] uppercase italic px-4">OUR TRUSTED PARTNERS</p>
         <div className="flex whitespace-nowrap overflow-hidden">
           <div className="flex gap-20 md:gap-40 animate-scroll-right items-center">
             {[...partners, ...partners, ...partners].map((partner, i) => (
