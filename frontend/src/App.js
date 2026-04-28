@@ -69,7 +69,7 @@ const App = () => {
     <div className="min-h-screen bg-[#ffb923] font-sans selection:bg-[#030fe0] selection:text-white text-[#030fe0]">
       <Navbar />
 
-      {/* VIDEO SECTION - Full Width, Clean Overlay */}
+      {/* VIDEO SECTION */}
       <section className="w-full h-[70vh] bg-black relative mt-16 overflow-hidden group">
         {!isPlaying ? (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer" onClick={() => setIsPlaying(true)}>
@@ -94,19 +94,27 @@ const App = () => {
         <p className="mt-6 text-[10px] font-black tracking-[0.5em] uppercase opacity-60">Har Hath Kalam India Association</p>
       </section>
 
-      {/* SNAKE JOURNEY - Slimmer connection, cleaner text */}
+      {/* SNAKE JOURNEY - Bolder path with visibility improvements */}
       <div className="max-w-5xl mx-auto py-20 px-8 relative">
-        <svg className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 1000 1500">
-          <path d="M 500 50 C 950 50, 950 300, 500 300 C 50 300, 50 550, 500 550 C 950 550, 950 800, 500 800 C 50 800, 50 1050, 500 1050 L 500 1250" fill="none" stroke="#030fe0" strokeWidth="2" strokeDasharray="10 10" className="opacity-20" />
+        <svg className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 1000 1500" preserveAspectRatio="none">
+          <path 
+            d="M 500 50 C 950 50, 950 300, 500 300 C 50 300, 50 550, 500 550 C 950 550, 950 800, 500 800 C 50 800, 50 1050, 500 1050 L 500 1250" 
+            fill="none" 
+            stroke="#030fe0" 
+            strokeWidth="6" 
+            strokeLinecap="round"
+            strokeDasharray="1 15" 
+            className="opacity-40" 
+          />
         </svg>
 
         {steps.map((step, index) => (
           <div key={step.id} className={`flex flex-col md:flex-row items-center mb-40 relative ${index % 2 !== 0 ? 'md:flex-row-reverse text-center md:text-right' : 'text-center md:text-left'}`}>
             <div className="relative z-10 shrink-0">
-              <div className="w-44 h-44 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center border-2 border-[#030fe0]/10">
-                <img src={step.img} alt={step.title} className="w-28 h-28 object-contain opacity-90" />
+              <div className="w-44 h-44 bg-white rounded-[2.5rem] shadow-2xl flex items-center justify-center border-4 border-[#030fe0]">
+                <img src={step.img} alt={step.title} className="w-28 h-28 object-contain" />
               </div>
-              <div className="absolute -top-3 -left-3 w-10 h-10 bg-[#030fe0] text-[#ffb923] rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
+              <div className="absolute -top-3 -left-3 w-10 h-10 bg-[#030fe0] text-[#ffb923] rounded-full flex items-center justify-center font-bold text-sm shadow-lg border-2 border-white">
                 {step.id}
               </div>
             </div>
@@ -116,7 +124,7 @@ const App = () => {
               <p className="text-[9px] font-black uppercase text-[#ffb923] bg-[#030fe0] inline-block px-3 py-1 rounded-full mb-4 tracking-widest">
                 {step.desc}
               </p>
-              <p className="text-sm leading-relaxed font-medium text-[#030fe0]/80">
+              <p className="text-sm leading-relaxed font-bold">
                 {step.detail}
               </p>
             </div>
@@ -124,12 +132,12 @@ const App = () => {
         ))}
       </div>
 
-      {/* CORE PROGRAMS - Light Cards */}
+      {/* CORE PROGRAMS */}
       <section className="pb-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-center text-3xl font-black tracking-widest uppercase mb-16">OUR CORE PROGRAMS</h2>
+          <h2 className="text-center text-3xl font-black tracking-widest uppercase mb-16 underline decoration-4 underline-offset-8">OUR CORE PROGRAMS</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white/60 backdrop-blur-sm p-12 rounded-[3rem] border border-white/40 shadow-sm hover:bg-white transition-all duration-300">
+            <div className="bg-white p-12 rounded-[3rem] border-4 border-[#030fe0] shadow-xl hover:-translate-y-2 transition-all duration-300">
               <h2 className="text-4xl font-black mb-1">BUNIYAAD</h2>
               <p className="text-[10px] font-bold opacity-40 tracking-[0.3em] mb-8 uppercase">Learning Centre Program</p>
               <ul className="space-y-4">
@@ -138,14 +146,14 @@ const App = () => {
                   "Establishing safe learning spaces, libraries, and classrooms right where the children are.",
                   "Holistic development to prepare children for meaningful careers and social integration."
                 ].map((li, i) => (
-                  <li key={i} className="flex gap-4 text-sm font-medium text-[#030fe0]/70 leading-relaxed">
-                    <span className="text-[#030fe0]">•</span> {li}
+                  <li key={i} className="flex gap-4 text-sm font-bold leading-relaxed">
+                    <span className="text-[#030fe0] text-xl">•</span> {li}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-white/60 backdrop-blur-sm p-12 rounded-[3rem] border border-white/40 shadow-sm hover:bg-white transition-all duration-300">
+            <div className="bg-white p-12 rounded-[3rem] border-4 border-[#030fe0] shadow-xl hover:-translate-y-2 transition-all duration-300">
               <h2 className="text-4xl font-black mb-1">MERI KITAB</h2>
               <p className="text-[10px] font-bold opacity-40 tracking-[0.3em] mb-8 uppercase">Community Learning Program</p>
               <ul className="space-y-4">
@@ -154,8 +162,8 @@ const App = () => {
                   "Working closely with parents to build a supportive home environment for learning.",
                   "Empowering the entire community to take ownership of their children's educational journey."
                 ].map((li, i) => (
-                  <li key={i} className="flex gap-4 text-sm font-medium text-[#030fe0]/70 leading-relaxed">
-                    <span className="text-[#030fe0]">•</span> {li}
+                  <li key={i} className="flex gap-4 text-sm font-bold leading-relaxed">
+                    <span className="text-[#030fe0] text-xl">•</span> {li}
                   </li>
                 ))}
               </ul>
@@ -164,16 +172,17 @@ const App = () => {
         </div>
       </section>
 
-      {/* PARTNERS SECTION - Rightward Motion */}
-      <section className="bg-[#030fe0] py-16 overflow-hidden">
+      {/* PARTNERS SECTION */}
+      <section className="bg-[#030fe0] py-20 overflow-hidden border-y-4 border-white/20">
+        <p className="text-center text-[#ffb923] text-2xl font-black mb-12 tracking-[0.2em] uppercase italic">OUR TRUSTED PARTNERS</p>
         <div className="flex whitespace-nowrap overflow-hidden">
-          <div className="flex gap-20 animate-scroll-right items-center">
+          <div className="flex gap-24 animate-scroll-right items-center">
             {[...partners, ...partners, ...partners].map((partner, i) => (
-              <div key={i} className="flex items-center gap-6 opacity-40 hover:opacity-100 transition-opacity">
-                <div className="w-12 h-12 bg-[#ffb923] rounded-xl flex items-center justify-center">
-                   <span className="text-[#030fe0] font-black text-[8px]">HHK</span>
+              <div key={i} className="flex items-center gap-6 group">
+                <div className="w-14 h-14 bg-[#ffb923] rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
+                   <span className="text-[#030fe0] font-black text-[10px]">HHK</span>
                 </div>
-                <span className="text-4xl font-black text-white italic">{partner}</span>
+                <span className="text-4xl font-black text-white italic group-hover:text-[#ffb923] transition-colors">{partner}</span>
               </div>
             ))}
           </div>
@@ -181,7 +190,7 @@ const App = () => {
       </section>
 
       <footer className="bg-[#ffb923] py-16 text-center">
-        <p className="text-[#ffb923] text-[9px] font-black tracking-[1em] uppercase opacity-40">HHK INDIA • 2026</p>
+        <p className="text-[#ffb923] text-[10px] font-black tracking-[1.5em] uppercase">HHK INDIA • 2026</p>
       </footer>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -190,7 +199,7 @@ const App = () => {
           100% { transform: translateX(0); }
         }
         .animate-scroll-right {
-          animation: scroll-right 30s linear infinite;
+          animation: scroll-right 25s linear infinite;
         }
       `}} />
     </div>
