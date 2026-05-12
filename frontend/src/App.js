@@ -194,8 +194,6 @@ const App = () => {
         `}</style>
 
       <Navbar />
-      
-
       {/* HERO VIDEO SLIDER SECTION */}
       <section className="w-full px-4 pt-28 pb-12 bg-transparent overflow-visible">
         <div className="max-w-6xl mx-auto relative flex items-center justify-center">
@@ -319,7 +317,63 @@ const App = () => {
         </div>
       </section>
 
-      
+      {/* NEW: MORE STORIES FROM COMMUNITIES SECTION */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <div className="flex flex-col items-center mb-16">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-[2px] w-12 bg-[#FFB800]"></div>
+            <span className="text-[#002B5B] font-black text-sm tracking-[0.3em] uppercase">Community Insights</span>
+            <div className="h-[2px] w-12 bg-[#FFB800]"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-[#002B5B] text-center" style={{ fontFamily: "'Lexend', sans-serif" }}>
+            MORE STORIES FROM <span className="text-[#FFB800]">COMMUNITIES</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {[
+            {
+              title: "Little Story of Change",
+              desc: "A young girl quietly entered a learning room carrying her own notebook and began copying lessons from the board. Curiosity became confidence.",
+              img: storyImg1,
+            },
+            {
+              title: "Bangles on the Wrist, Freedom at Fingertips",
+              desc: "When girls learn, they move forward with confidence. Education opens doors, creates choices and brings freedom.",
+              img: storyImg2,
+            },
+            {
+              title: "Story of Prajapat Community",
+              desc: "What began with three girls attending Meri Kitab sessions grew into many children choosing joyful learning spaces within their own community.",
+              img: storyImg3,
+            }
+          ].map((story, index) => (
+            <div key={index} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-[#002B5B]/5">
+              <div className="h-56 overflow-hidden relative">
+                <img 
+                  src={story.img} 
+                  alt={story.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#002B5B]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div className="p-8">
+                <h3 className="text-xl font-black text-[#002B5B] mb-4 leading-tight">
+                  {story.title}
+                </h3>
+                <p className="text-[#002B5B] text-[15px] font-bold leading-relaxed mb-6">
+                  {story.desc}
+                </p>
+                <button className="flex items-center gap-2 text-[#002B5B] font-black text-[10px] uppercase tracking-widest group/btn">
+                  Read Full Story 
+                  <ArrowUpRight size={14} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                  <div className="h-[2px] w-8 bg-[#FFB800]"></div>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* COMPACT IMPACT STATS */}
       <section className="bg-[#002B5B] py-12 text-white relative overflow-hidden">
@@ -349,11 +403,11 @@ const App = () => {
       </section>
 
       <footer className="py-16 text-center bg-[#FFFDF0]">
-         <div className="flex flex-wrap justify-center gap-6 mb-10">
+          <div className="flex flex-wrap justify-center gap-6 mb-10">
             <button className="bg-[#FFB800] text-[#002B5B] px-10 py-4 rounded-full font-black uppercase text-xs hover:bg-[#002B5B] hover:text-white transition-all shadow-lg border-2 border-[#FFB800]">Visit Our Programs</button>
             <button className="bg-[#002B5B] text-white px-10 py-4 rounded-full font-black uppercase text-xs hover:bg-[#FFB800] hover:text-[#002B5B] transition-all shadow-lg border-2 border-[#002B5B]">Read More Stories</button>
-         </div>
-         <p className="text-[10px] font-bold opacity-30 uppercase tracking-[1.5em]">The Journey Continues</p>
+          </div>
+          <p className="text-[10px] font-bold opacity-30 uppercase tracking-[1.5em]">The Journey Continues</p>
       </footer>
     </div>
   );
