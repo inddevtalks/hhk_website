@@ -1,167 +1,360 @@
-import React, { useState } from 'react';
-import { Play, Menu } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Play, 
+  BookOpen, 
+  ChevronRight, 
+  ChevronLeft, 
+  Users, 
+  GraduationCap, 
+  Heart,
+  ArrowUpRight
+} from 'lucide-react';
+
+// Assets - Local image locations
+import journeyImg1 from './web_media/img_6.jpeg'; 
+import journeyImg2 from './web_media/img_7.jpeg';
+import journeyImg3 from './web_media/img_8.jpeg';
+import journeyImg4 from './web_media/img_9.jpeg'; 
+import journeyImg5 from './web_media/img_10.jpeg';
+
+// Stories section images
+import storyImg1 from './web_media/img_1.jpeg';
+import storyImg2 from './web_media/img_2.jpeg';
+import storyImg3 from './web_media/img_3.jpeg';
+import storyImg4 from './web_media/img_4.jpeg'; 
+import storyImg5 from './web_media/img_5.jpeg';
+
+import profile_img1 from './web_media/img_1.jpeg';
+import profile_img2 from './web_media/img_2.jpeg';
+import profile_img3 from './web_media/img_3.jpeg';
+import profile_img4 from './web_media/img_4.jpeg'; 
 
 const Navbar = () => {
-  const navLinks = ['Home', 'About', 'Contact', 'Team', 'Partners', 'Careers', 'Blogs'];
+  const navLinks = ['Home', 'About Us', 'Our Programs', 'Stories of Change', 'Get Involved', 'Contact'];
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#030fe0] text-[#ffb923] shadow-lg px-6 md:px-12 py-4">
+    <nav className="fixed top-0 w-full z-50 bg-[#002B5B] text-white shadow-md px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <img 
-            src="/logo.png" 
-            alt="HHK" 
-            className="h-8 w-auto brightness-200" 
-            onError={(e) => e.target.src = "https://via.placeholder.com/40?text=HHK"} 
-          />
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center font-bold text-[#002B5B]">HK</div>
+          <span className="font-bold text-sm hidden md:block">Har Hath Kalam</span>
         </div>
-        <div className="hidden lg:flex items-center gap-10">
+        <div className="hidden lg:flex items-center gap-8">
           {navLinks.map((name) => (
-            <a key={name} href="#" className="text-[12px] font-bold uppercase tracking-[0.2em] hover:text-white transition-colors">{name}</a>
+            <a key={name} href="#" className="text-[11px] font-bold uppercase tracking-wider hover:text-[#FFB800] transition-colors">
+              {name}
+            </a>
           ))}
         </div>
-        <Menu className="lg:hidden w-6 h-6 text-[#ffb923]" />
+        <button className="bg-[#FFB800] text-[#002B5B] px-6 py-2 rounded-lg font-black text-xs uppercase hover:bg-white transition-all">
+          Donate Now
+        </button>
       </div>
     </nav>
   );
 };
 
-const App = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+/* 🔥 DYNAMIC JOURNEY COMPONENT */
+const DynamicJourney = ({ roadmap }) => {
+  const containerRef = useRef(null);
+  const itemRefs = useRef([]);
+  const [pathD, setPathD] = useState("");
 
-  const steps = [
-    { id: 1, title: "THE PROBLEM", desc: "KIDS ON STREETS", detail: "Thousands of children live and work on the streets, deprived of safety, dignity, and their basic right to education. They are often trapped in a cycle of poverty that seems impossible to break without external intervention.", img: "https://cdn-icons-png.flaticon.com/512/4295/4295903.png" },
-    { id: 2, title: "IDENTIFYING", desc: "THE MISSING VOICES", detail: "We meet children on the streets who often have no identity—some don't even have names or birth certificates. Our first step is recognizing them as individuals with potential and documenting their existence.", img: "https://cdn-icons-png.flaticon.com/512/3521/3521101.png" },
-    { id: 3, title: "ENROLLING", desc: "THE SCHOOL BRIDGE", detail: "We bridge the gap to enroll them in formal education systems. This involves navigating complex paperwork and preparing the child psychologically to transition from the street to a structured classroom environment.", img: "https://cdn-icons-png.flaticon.com/512/2855/2855260.png" },
-    { id: 4, title: "THE BARRIERS", desc: "SOCIAL STIGMA", detail: "Schools and society often judge them for their past, their clothes, or their lifestyle. These barriers often break their spirit at the school gates, making it difficult for them to stay enrolled without our constant support.", img: "https://cdn-icons-png.flaticon.com/512/6254/6254441.png" },
-    { id: 5, title: "OUR PATHWAYS", desc: "THE SUSTAINABLE SOLUTION", detail: "We created unique programs to walk beside them. We don't just enroll them; we mentor them, support their families, and ensure the community becomes a safe space for their growth and long-term success.", img: "https://cdn-icons-png.flaticon.com/512/3233/3233486.png" },
-  ];
+  useEffect(() => {
+    const updatePath = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const points = itemRefs.current.map(el => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return {
+          x: r.left + r.width / 2 - rect.left,
+          y: r.top + r.height / 2 - rect.top
+        };
+      }).filter(Boolean);
 
-  const partners = ["UNICEF", "TATA TRUSTS", "HDFC BANK", "RELIANCE", "INFOSYS", "GIVE INDIA"];
+      if (points.length < 2) return;
+      let d = `M ${points[0].x},${points[0].y}`;
+      for (let i = 1; i < points.length; i++) {
+        const prev = points[i - 1];
+        const curr = points[i];
+        const midX = (prev.x + curr.x) / 2;
+        d += ` C ${midX},${prev.y} ${midX},${curr.y} ${curr.x},${curr.y}`;
+      }
+      setPathD(d);
+    };
+
+    setTimeout(updatePath, 200);
+    window.addEventListener("resize", updatePath);
+    return () => window.removeEventListener("resize", updatePath);
+  }, [roadmap]);
 
   return (
-    <div className="min-h-screen bg-[#ffb923] font-sans selection:bg-[#030fe0] selection:text-white text-[#030fe0] overflow-x-hidden w-full">
-      <Navbar />
+    <div ref={containerRef} className="relative min-h-[600px] mt-8">
+      <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+        <path
+          d={pathD}
+          stroke="#FFB800" 
+          strokeWidth="3"
+          strokeDasharray="10 15"
+          strokeLinecap="round"
+          fill="none"
+          className="opacity-40 animate-dash"
+        />
+      </svg>
 
-      {/* HERO VIDEO SECTION - FIXED MOBILE DISCOLORATION */}
-      <section className="w-full h-[50vh] md:h-[75vh] bg-black relative mt-16 overflow-hidden group border-b-2 border-[#030fe0]/10">
-        {!isPlaying ? (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer" onClick={() => setIsPlaying(true)}>
-            <div className="absolute inset-0 bg-black">
-              <div className="w-full h-full bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000" 
-                   style={{ backgroundImage: `url('https://i.ytimg.com/vi/Y6aC43IODlg/maxresdefault.jpg')` }}></div>
-            </div>
-            <div className="relative z-20 flex flex-col items-center gap-4">
-              <div className="w-16 h-16 md:w-24 md:h-24 bg-[#030fe0] text-[#ffb923] rounded-full flex items-center justify-center shadow-2xl border-2 border-[#ffb923]/30 transform group-hover:scale-110 transition-transform">
-                <Play size={32} className="ml-1" fill="currentColor" />
-              </div>
-              <p className="font-extrabold tracking-[0.4em] text-white uppercase text-[10px]">Watch Impact</p>
-            </div>
-          </div>
-        ) : (
-          <iframe className="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/Y6aC43IODlg?autoplay=1" frameBorder="0" allowFullScreen></iframe>
-        )}
-      </section>
-      
-      {/* HEADER */}
-      <section className="text-center py-20 md:py-28 px-6">
-        <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
-          THE JOURNEY <br/><span className="opacity-70">OF CHANGE</span>
-        </h1>
-        <p className="mt-6 text-[10px] font-bold tracking-[0.5em] uppercase opacity-60">Har Hath Kalam India Association</p>
-      </section>
-
-      {/* SNAKE ROADMAP - STABILIZED FOR MOBILE */}
-      <div className="max-w-5xl mx-auto py-12 md:py-20 px-8 relative">
-        {/* Desktop SVG */}
-        <svg className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 1000 1500" preserveAspectRatio="none">
-          <path d="M 500 50 C 950 50, 950 300, 500 300 C 50 300, 50 550, 500 550 C 950 550, 950 800, 500 800 C 50 800, 50 1050, 500 1050 L 500 1250" fill="none" stroke="#030fe0" strokeWidth="4" strokeDasharray="15 15" className="opacity-20" />
-        </svg>
-
-        {/* Mobile Connector Line */}
-        <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px border-l-2 border-dashed border-[#030fe0] opacity-20"></div>
-
-        {steps.map((step, index) => (
-          <div key={step.id} className={`flex flex-col md:flex-row items-center mb-28 md:mb-44 relative ${index % 2 !== 0 ? 'md:flex-row-reverse text-center md:text-right' : 'text-center md:text-left'}`}>
-            <div className="relative z-10 shrink-0">
-              <div className="w-40 h-40 md:w-52 md:h-52 bg-white rounded-[3rem] shadow-xl flex items-center justify-center border-2 border-[#030fe0]/10">
-                <img src={step.img} alt={step.title} className="w-24 h-24 md:w-32 md:h-32 object-contain" />
-              </div>
-              <div className="absolute -top-3 -left-3 w-10 h-10 md:w-12 md:h-12 bg-[#030fe0] text-[#ffb923] rounded-full flex items-center justify-center font-black text-sm md:text-lg shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10">
+        {roadmap.map((step, index) => (
+          <div
+            key={step.id}
+            className={`flex flex-col items-center text-center transition-all duration-700
+            ${index % 2 === 0 ? 'md:-translate-y-4' : 'md:translate-y-40'}`}
+          >
+            <div
+              ref={(el) => (itemRefs.current[index] = el)}
+              className="relative w-32 h-32 bg-white border-4 border-[#FFB800] rounded-full overflow-hidden mb-6 shadow-2xl animate-pulse-slow group cursor-pointer hover:scale-110 transition-all"
+            >
+              <img 
+                src={step.img} 
+                alt={step.title} 
+                className="w-full h-full object-cover transition-all duration-500" 
+              />
+              <div className="absolute -top-1 -right-1 w-9 h-9 bg-[#002B5B] text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg z-20">
                 {step.id}
               </div>
             </div>
 
-            <div className="md:px-16 mt-10 md:mt-0 max-w-xl">
-              <h3 className="text-3xl md:text-5xl font-extrabold mb-3 leading-none uppercase tracking-tighter">{step.title}</h3>
-              <div className="mb-6">
-                <span className="text-[10px] md:text-[11px] font-bold uppercase text-[#ffb923] bg-[#030fe0] px-4 py-1.5 rounded-full tracking-widest inline-block">
-                  {step.desc}
-                </span>
-              </div>
-              <p className="text-sm md:text-lg leading-relaxed font-semibold opacity-90">
-                {step.detail}
+            <div className="max-w-[220px] bg-white border-2 border-[#002B5B]/10 p-5 rounded-3xl shadow-xl transform transition-transform hover:-translate-y-1">
+              <h4 className="font-black text-[14px] uppercase mb-2 text-[#002B5B] tracking-wide border-b border-[#FFB800] pb-1 inline-block">
+                {step.title}
+              </h4>
+              <p className="text-[13px] font-bold text-[#002B5B] leading-relaxed text-center">
+                {step.desc}
               </p>
             </div>
           </div>
         ))}
       </div>
+    </div>
+  );
+};
 
-      {/* CORE PROGRAMS */}
-      <section className="pb-32 md:pb-40 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-center text-3xl md:text-4xl font-black tracking-widest uppercase mb-16 underline decoration-4 underline-offset-8">OUR CORE PROGRAMS</h2>
-          <div className="grid lg:grid-cols-2 gap-10">
-            {[
-              { name: "BUNIYAAD", sub: "Learning Centre Program", items: ["Bridge education program specifically for children who are unable to attend formal schools.", "Establishing safe learning spaces, libraries, and classrooms right where the children are.", "Holistic development to prepare children for meaningful careers and social integration."] },
-              { name: "MERI KITAB", sub: "Community Learning Program", items: ["Bringing education to the heart of communities through interactive readings and theatre.", "Working closely with parents to build a supportive home environment for learning.", "Empowering the entire community to take ownership of their children's educational journey."] }
-            ].map((prog, idx) => (
-              <div key={idx} className="bg-white p-10 md:p-14 rounded-[3rem] md:rounded-[4rem] border-[3px] border-[#030fe0] shadow-2xl hover:-translate-y-3 transition-transform duration-500">
-                <h2 className="text-4xl md:text-5xl font-black mb-1">{prog.name}</h2>
-                <p className="text-[10px] font-bold opacity-30 tracking-[0.4em] mb-10 uppercase">{prog.sub}</p>
-                <ul className="space-y-6">
-                  {prog.items.map((li, i) => (
-                    <li key={i} className="flex gap-5 text-sm md:text-lg font-bold leading-tight items-start">
-                      <span className="text-[#030fe0]">•</span> {li}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+const App = () => {
+  const [currentVideo, setCurrentVideo] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-      {/* PARTNERS */}
-      <section className="bg-[#030fe0] py-16 md:py-24 overflow-hidden border-y border-white/10">
-      <p className="text-center text-[#ffb923] text-2xl md:text-3xl font-black mb-16 tracking-[0.4em] uppercase italic px-4">OUR TRUSTED PARTNERS</p>
-        <div className="flex whitespace-nowrap overflow-hidden">
-          <div className="flex gap-20 md:gap-40 animate-scroll-right items-center">
-            {[...partners, ...partners, ...partners].map((partner, i) => (
-              <div key={i} className="flex items-center gap-8 group">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-[#ffb923] rounded-2xl flex items-center justify-center transform group-hover:rotate-6 transition-transform">
-                   <span className="text-[#030fe0] font-black text-xs">HHK</span>
+  const videoData = [
+    { id: "Y6aC43IODlg", thumb: "https://i.ytimg.com/vi/Y6aC43IODlg/maxresdefault.jpg" },
+    { id: "tEE_okAj26A", thumb: "https://i.ytimg.com/vi/tEE_okAj26A/maxresdefault.jpg" },
+    { id: "fnP4417_Txo", thumb: "https://i.ytimg.com/vi/fnP4417_Txo/maxresdefault.jpg" },
+    { id: "vviwUI3jiq4", thumb: "https://i.ytimg.com/vi/vviwUI3jiq4/maxresdefault.jpg" },
+    { id: "uyb5FKGkV7A", thumb: "https://i.ytimg.com/vi/uyb5FKGkV7A/maxresdefault.jpg" }
+  ];
+
+  useEffect(() => {
+    let interval;
+    if (!isPlaying) {
+      interval = setInterval(() => {
+        setCurrentVideo((prev) => (prev + 1) % videoData.length);
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, videoData.length]);
+
+  const nextVideo = () => {
+    setIsPlaying(false);
+    setCurrentVideo((prev) => (prev + 1) % videoData.length);
+  };
+
+  const prevVideo = () => {
+    setIsPlaying(false);
+    setCurrentVideo((prev) => (prev - 1 + videoData.length) % videoData.length);
+  };
+
+  const roadmap = [
+    { id: 1, title: "Found on the Streets", desc: "Children growing up without access to safety, education, or identity.", img: journeyImg1 },
+    { id: 2, title: "Building Trust", desc: "We met children in underserved communities and built strong foundations of trust.", img: journeyImg2 },
+    { id: 3, title: "Safe Learning Spaces", desc: "Through Buniyaad, children found permanent spaces to learn and belong.", img: journeyImg3 },
+    { id: 4, title: "Growth & Confidence", desc: "Children began reading, writing, and dreaming bigger.", img: journeyImg4 },
+    { id: 5, title: "Future Leaders", desc: "From learners to leaders—shaping a better future.", img: journeyImg5 },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#FFFDF0] text-[#002B5B] overflow-x-hidden selection:bg-[#FFB800] selection:text-[#002B5B]">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@800&family=Outfit:wght@400;600;800&display=swap');
+        @keyframes dashMove { to { stroke-dashoffset: -1000; } }
+        .animate-dash { animation: dashMove 40s linear infinite; }
+        @keyframes pulseSlow {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+        .animate-pulse-slow { animation: pulseSlow 5s ease-in-out infinite; }
+        
+        `}</style>
+
+      <Navbar />
+      
+
+      {/* HERO VIDEO SLIDER SECTION */}
+      <section className="w-full px-4 pt-28 pb-12 bg-transparent overflow-visible">
+        <div className="max-w-6xl mx-auto relative flex items-center justify-center">
+          <button onClick={prevVideo} className="hidden md:flex absolute -left-9 lg:-left-11 z-30 bg-[#002B5B] hover:bg-[#FFB800] text-white hover:text-[#002B5B] w-14 h-14 items-center justify-center rounded-full transition-all shadow-xl">
+            <ChevronLeft size={30} />
+          </button>
+          <div className="w-full max-w-5xl relative group overflow-hidden rounded-[2.5rem] shadow-2xl bg-black aspect-video md:h-[450px]">
+            <div className="flex transition-transform duration-1000 ease-in-out h-full" style={{ transform: `translateX(-${currentVideo * 100}%)` }}>
+              {videoData.map((video, index) => (
+                <div key={index} className="min-w-full h-full relative">
+                  {!isPlaying || currentVideo !== index ? (
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer" onClick={() => setIsPlaying(true)}>
+                      <div className="absolute inset-0 bg-cover bg-center transition-all duration-1000 opacity-60 group-hover:opacity-80 scale-105 group-hover:scale-100" style={{ backgroundImage: `url('${video.thumb}')` }}></div>
+                      <div className="relative z-20 flex flex-col items-center gap-4">
+                        <div className="w-20 h-20 bg-[#002B5B] text-[#FFB800] rounded-full flex items-center justify-center border-4 border-[#FFB800] transform hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,184,0,0.4)]">
+                          <Play size={32} className="ml-1" fill="currentColor" />
+                        </div>
+                        <p className="font-extrabold tracking-[0.4em] text-white uppercase text-[10px]">Play Story {index + 1}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <iframe className="absolute top-0 left-0 w-full h-full" src={`https://www.youtube.com/embed/${video.id}?autoplay=1`} frameBorder="0" allowFullScreen></iframe>
+                  )}
                 </div>
-                <span className="text-4xl md:text-6xl font-black text-white/10 group-hover:text-[#ffb923] transition-colors duration-500 uppercase italic">{partner}</span>
+              ))}
+            </div>
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+              {videoData.map((_, i) => (
+                <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${currentVideo === i ? 'w-8 bg-[#FFB800]' : 'w-2 bg-white/50'}`} />
+              ))}
+            </div>
+          </div>
+          <button onClick={nextVideo} className="hidden md:flex absolute -right-10 lg:-right-12 z-30 bg-[#002B5B] hover:bg-[#FFB800] text-white hover:text-[#002B5B] w-14 h-14 items-center justify-center rounded-full transition-all shadow-xl">
+            <ChevronRight size={30} />
+          </button>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 pt-20 pb-10" style={{ fontFamily: "'Outfit', sans-serif" }}>
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+          <div className="lg:w-1/3 text-left space-y-6">
+            <h2 className="text-5xl md:text-6xl font-black tracking-tighter leading-tight text-[#002B5B]" style={{ fontFamily: "'Lexend', sans-serif" }}>
+              STORIES OF <br/>
+              <span className="text-[#FFB800]">CHANGE</span>
+            </h2>
+            <p className="text-lg font-bold uppercase tracking-[0.3em] text-[#002B5B] opacity-80">From The Communities</p>
+            <p className="font-bold text-base md:text-lg leading-relaxed text-[#002B5B]">
+              Children once left behind are now <span className="bg-[#FFB800]/20 px-1">educators, creators, and changemakers</span>—building identities and futures of their own.
+            </p>
+            <button className="bg-[#002B5B] text-white px-8 py-3 rounded-full font-bold uppercase text-xs hover:bg-[#FFB800] hover:text-[#002B5B] transition-all shadow-md">
+              Explore More Stories
+            </button>
+          </div>
+          <div className="lg:w-2/3 w-full relative h-[500px] md:h-[600px] mt-10 lg:mt-0">
+            {[storyImg1, storyImg2, storyImg3, storyImg4, storyImg5].map((img, idx) => {
+              const styles = ["top-0 left-0 w-1/2 h-56 -rotate-6", "top-10 right-0 w-1/2 h-64 rotate-3", "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-48 rotate-12 border-[#FFB800] border-2 z-40", "bottom-0 left-10 w-1/2 h-52 rotate-2", "bottom-10 right-10 w-2/5 h-44 -rotate-12"];
+              return (
+                <div key={idx} className={`absolute ${styles[idx]} shadow-2xl hover:rotate-0 hover:scale-105 transition-all duration-500 bg-white p-2 overflow-hidden`}>
+                   <img src={img} alt="Story" className="w-full h-full object-cover" />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="pt-20 pb-0 px-6 relative max-w-7xl mx-auto bg-gradient-to-b from-white/40 to-transparent rounded-[4rem] mt-6 mb-0 border border-white/50">
+        <div className="flex flex-col items-center mb-16">
+          <div className="flex items-center gap-4 mb-4">
+              <div className="h-[2px] w-12 bg-[#FFB800]"></div>
+              <span className="text-[#002B5B] font-black text-sm tracking-[0.3em] uppercase">Impact Roadmap</span>
+              <div className="h-[2px] w-12 bg-[#FFB800]"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-[#002B5B] text-center" style={{ fontFamily: "'Lexend', sans-serif" }}>
+            THE <span className="text-[#FFB800]">JOURNEY</span>
+          </h2>
+        </div>
+        <DynamicJourney roadmap={roadmap} />
+      </section>
+
+      <section className="pt-0 pb-16 bg-white px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-black text-[#002B5B] text-center mb-4" style={{ fontFamily: "'Lexend', sans-serif" }}>
+              VOICES OF <span className="text-[#FFB800]">IMPACT</span>
+            </h2>
+            <div className="flex items-center gap-2">
+              <div className="h-[3px] w-8 bg-[#FFB800] rounded-full"></div>
+              <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#002B5B]">Real Stories, Real Change</p>
+              <div className="h-[3px] w-8 bg-[#FFB800] rounded-full"></div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-24 gap-x-8">
+            {[
+              { name: "Nargis", role: "Educator Intern", tag: "MERI KITAB", theme: "dark", quote: "From learner to storyteller.", desc: "Once unable to identify alphabets, Nargis now writes her own stories and teaches girls in her community. She transformed from a learner into a role model.", img: profile_img1 },
+              { name: "Tania", role: "Educator Intern", tag: "BUNIYAAD", theme: "dark", quote: "From student to mentor.", desc: "Tania once studied in the same learning spaces she now returns to as a mentor. Today, she inspires girls to continue learning despite barriers.", img: profile_img2 },
+              { name: "Payal", role: "Community Leader", tag: "MERI KITAB", theme: "dark", quote: "From limitation to leadership.", desc: "Payal chose education in a space where girls were often expected to stay limited. Today she supports younger girls in pursuing learning with confidence.", img: profile_img3 },
+              { name: "Reehan", role: "Digital Media", tag: "DIGITAL MEDIA", theme: "dark", quote: "From curiosity to creativity.", desc: "Reehan discovered confidence through storytelling and photography. Today he documents community stories and dreams of building a career in media.", img: profile_img4 }
+            ].map((story, i) => (
+              <div key={i} className={`group relative rounded-[2rem] pt-20 pb-10 px-8 text-center transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${story.theme === 'dark' ? 'bg-[#002B5B] text-white' : 'bg-[#F8F9FA] text-[#002B5B]'}`}>
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28">
+                  <div className={`relative w-full h-full rounded-3xl overflow-hidden rotate-3 group-hover:rotate-0 transition-transform duration-500 shadow-xl border-4 ${story.theme === 'dark' ? 'border-[#FFB800]' : 'border-white'}`}>
+                    <img src={story.img} alt={story.name} className="w-full h-full object-cover" />
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <span className={`px-4 py-1 rounded-lg text-[9px] font-black tracking-widest uppercase ${story.theme === 'dark' ? 'bg-[#FFB800] text-[#002B5B]' : 'bg-[#002B5B] text-white'}`}>{story.tag}</span>
+                </div>
+                <h3 className={`text-2xl font-black leading-tight mb-1 ${story.theme === 'dark' ? 'text-[#FFB800]' : 'text-[#002B5B]'}`}>{story.name}</h3>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-4 opacity-60">{story.role}</p>
+                <p className="text-[13px] font-extrabold leading-relaxed mb-6 px-2 italic">{story.desc}</p>
+                <div className="relative">
+                   <span className={`absolute -top-4 -left-2 text-4xl font-serif opacity-30 ${story.theme === 'dark' ? 'text-white' : 'text-[#FFB800]'}`}>“</span>
+                   <p className="text-[15px] font-black leading-relaxed relative z-10">{story.quote}</p>
+                   <span className={`absolute -bottom-6 -right-2 text-4xl font-serif opacity-30 ${story.theme === 'dark' ? 'text-white' : 'text-[#FFB800]'}`}>”</span>
+                </div>
+                <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1.5 rounded-t-full transition-all duration-500 ${story.theme === 'dark' ? 'bg-[#FFB800]' : 'bg-[#002B5B]'}`}></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#ffb923] py-20 text-center border-t border-[#030fe0]/10">
-        <p className="text-[#030fe0] text-[10px] font-extrabold tracking-[1.5em] uppercase">HHK INDIA • 2026</p>
-      </footer>
+      
 
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes scroll-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-        .animate-scroll-right {
-          animation: scroll-right 30s linear infinite;
-        }
-      `}} />
+      {/* COMPACT IMPACT STATS */}
+      <section className="bg-[#002B5B] py-12 text-white relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0">
+            <div className="flex-1 flex flex-col items-center text-center group">
+              <div className="mb-3 text-[#FFB800] opacity-80"><Users size={24} strokeWidth={1.5} /></div>
+              <h3 className="text-5xl font-light tracking-tight text-[#FFB800] mb-1" style={{ fontFamily: "'Lexend', sans-serif" }}>1000<span className="text-2xl ml-0.5 font-normal">+</span></h3>
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/60">Children Reached</p>
+            </div>
+            <div className="hidden md:block h-16 border-l-2 border-dotted border-[#FFB800]/40"></div>
+            <div className="md:hidden w-24 border-t-2 border-dotted border-[#FFB800]/40"></div>
+            <div className="flex-1 flex flex-col items-center text-center group">
+              <div className="mb-3 text-[#FFB800] opacity-80"><GraduationCap size={24} strokeWidth={1.5} /></div>
+              <h3 className="text-5xl font-light tracking-tight text-[#FFB800] mb-1" style={{ fontFamily: "'Lexend', sans-serif" }}>02</h3>
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/60">Core Programs</p>
+            </div>
+            <div className="hidden md:block h-16 border-l-2 border-dotted border-[#FFB800]/40"></div>
+            <div className="md:hidden w-24 border-t-2 border-dotted border-[#FFB800]/40"></div>
+            <div className="flex-1 flex flex-col items-center text-center group">
+              <div className="mb-3 text-[#FFB800] opacity-80"><Heart size={24} strokeWidth={1.5} /></div>
+              <h3 className="text-5xl font-light tracking-tight text-[#FFB800] mb-1" style={{ fontFamily: "'Lexend', sans-serif" }}>∞</h3>
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/60">Stories of Hope</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-16 text-center bg-[#FFFDF0]">
+         <div className="flex flex-wrap justify-center gap-6 mb-10">
+            <button className="bg-[#FFB800] text-[#002B5B] px-10 py-4 rounded-full font-black uppercase text-xs hover:bg-[#002B5B] hover:text-white transition-all shadow-lg border-2 border-[#FFB800]">Visit Our Programs</button>
+            <button className="bg-[#002B5B] text-white px-10 py-4 rounded-full font-black uppercase text-xs hover:bg-[#FFB800] hover:text-[#002B5B] transition-all shadow-lg border-2 border-[#002B5B]">Read More Stories</button>
+         </div>
+         <p className="text-[10px] font-bold opacity-30 uppercase tracking-[1.5em]">The Journey Continues</p>
+      </footer>
     </div>
   );
 };
