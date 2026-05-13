@@ -11,11 +11,11 @@ import {
 } from 'lucide-react';
 
 // Assets - Local image locations
-import journeyImg1 from './web_media/img_6.jpeg'; 
-import journeyImg2 from './web_media/img_7.jpeg';
-import journeyImg3 from './web_media/img_8.jpeg';
-import journeyImg4 from './web_media/img_9.jpeg'; 
-import journeyImg5 from './web_media/img_10.jpeg';
+import journeyImg1 from './web_media/prf_1.jpeg'; 
+import journeyImg2 from './web_media/prf_2.jpeg';
+import journeyImg3 from './web_media/prf_3.jpeg';
+import journeyImg4 from './web_media/prf_4.jpeg'; 
+import journeyImg5 from './web_media/prf_5.jpeg';
 
 // Stories section images
 import storyImg1 from './web_media/img_1.jpeg';
@@ -94,8 +94,8 @@ const DynamicJourney = ({ roadmap }) => {
       <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <path
           d={pathD}
-          stroke="#FFB800" 
-          strokeWidth="3"
+          stroke="#1409f1"
+          strokeWidth="10"
           strokeDasharray="10 15"
           strokeLinecap="round"
           fill="none"
@@ -190,10 +190,10 @@ const App = () => {
           50% { transform: scale(1.05); }
         }
         .animate-pulse-slow { animation: pulseSlow 5s ease-in-out infinite; }
-        
-        `}</style>
+      `}</style>
 
       <Navbar />
+
       {/* HERO VIDEO SLIDER SECTION */}
       <section className="w-full px-4 pt-28 pb-12 bg-transparent overflow-visible">
         <div className="max-w-6xl mx-auto relative flex items-center justify-center">
@@ -232,6 +232,7 @@ const App = () => {
         </div>
       </section>
 
+      {/* STORIES OF CHANGE SECTION */}
       <section className="max-w-7xl mx-auto px-6 pt-20 pb-10" style={{ fontFamily: "'Outfit', sans-serif" }}>
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/3 text-left space-y-6">
@@ -260,21 +261,31 @@ const App = () => {
         </div>
       </section>
 
-      <section className="pt-20 pb-0 px-6 relative max-w-7xl mx-auto bg-gradient-to-b from-white/40 to-transparent rounded-[4rem] mt-6 mb-0 border border-white/50">
-        <div className="flex flex-col items-center mb-16">
+      {/* IMPACT ROADMAP SECTION (Updated Heading) */}
+      <section className="pt-20 pb-5 px-6 relative max-w-7xl mx-auto bg-gradient-to-b from-white/40 to-transparent rounded-[4rem] mt-6 mb-0 border border-white/50">
+        <div className="flex flex-col items-center text-center mb-16 max-w-3xl mx-auto">
           <div className="flex items-center gap-4 mb-4">
               <div className="h-[2px] w-12 bg-[#FFB800]"></div>
               <span className="text-[#002B5B] font-black text-sm tracking-[0.3em] uppercase">Impact Roadmap</span>
               <div className="h-[2px] w-12 bg-[#FFB800]"></div>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-[#002B5B] text-center" style={{ fontFamily: "'Lexend', sans-serif" }}>
-            THE <span className="text-[#FFB800]">JOURNEY</span>
+          <h2 className="text-4xl md:text-5xl font-black text-[#002B5B] mb-6 leading-tight uppercase" style={{ fontFamily: "'Lexend', sans-serif" }}>
+            FROM THE STREETS <br/> TO <span className="text-[#FFB800]">SELF-BELIEF</span>
           </h2>
+          <div className="space-y-4">
+            <p className="text-base md:text-lg font-bold text-[#002B5B]/80 leading-relaxed">
+              India's slum population is larger than the entire population of Bhutan. In Punjab alone, lakhs of people live in informal settlements across cities like Ludhiana, Amritsar, Jalandhar and Bathinda.
+            </p>
+            <p className="text-lg md:text-xl font-black text-[#002B5B] italic">
+              Behind these numbers are children growing up without safe access to education, identity, or opportunity. <span className="text-[#FFB800] not-italic">Har Hath Kalam exists to change that.</span>
+            </p>
+          </div>
         </div>
         <DynamicJourney roadmap={roadmap} />
       </section>
 
-      <section className="pt-0 pb-16 bg-white px-6">
+      {/* VOICES OF IMPACT */}
+      <section className="pt-3 pb-16 bg-white px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-[#002B5B] text-center mb-4" style={{ fontFamily: "'Lexend', sans-serif" }}>
@@ -288,10 +299,10 @@ const App = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-24 gap-x-8">
             {[
-              { name: "Nargis", role: "Educator Intern", tag: "MERI KITAB", theme: "dark", quote: "From learner to storyteller.", desc: "Once unable to identify alphabets, Nargis now writes her own stories and teaches girls in her community. She transformed from a learner into a role model.", img: profile_img1 },
-              { name: "Tania", role: "Educator Intern", tag: "BUNIYAAD", theme: "dark", quote: "From student to mentor.", desc: "Tania once studied in the same learning spaces she now returns to as a mentor. Today, she inspires girls to continue learning despite barriers.", img: profile_img2 },
-              { name: "Payal", role: "Community Leader", tag: "MERI KITAB", theme: "dark", quote: "From limitation to leadership.", desc: "Payal chose education in a space where girls were often expected to stay limited. Today she supports younger girls in pursuing learning with confidence.", img: profile_img3 },
-              { name: "Reehan", role: "Digital Media", tag: "DIGITAL MEDIA", theme: "dark", quote: "From curiosity to creativity.", desc: "Reehan discovered confidence through storytelling and photography. Today he documents community stories and dreams of building a career in media.", img: profile_img4 }
+              { name: "Nargis", role: "Educator Intern", tag: "MERI KITAB", theme: "dark", desc: "Once unable to identify alphabets, Nargis now writes her own stories and teaches girls in her community. She transformed from a learner into a role model.", quote: "From learner to storyteller.", img: profile_img1 },
+              { name: "Tania", role: "Educator Intern", tag: "BUNIYAAD", theme: "dark", desc: "Tania once studied in the same learning spaces she now returns to as a mentor. Today, she inspires girls to continue learning despite barriers.", quote: "From student to mentor.", img: profile_img2 },
+              { name: "Payal", role: "Community Leader", tag: "MERI KITAB", theme: "dark", desc: "Payal chose education in a space where girls were often expected to stay limited. Today she supports younger girls in pursuing learning with confidence.", quote: "From limitation to leadership.", img: profile_img3 },
+              { name: "Reehan", role: "Digital Media", tag: "DIGITAL MEDIA", theme: "dark", desc: "Reehan discovered confidence through storytelling and photography. Today he documents community stories and dreams of building a career in media.", quote: "From curiosity to creativity.", img: profile_img4 }
             ].map((story, i) => (
               <div key={i} className={`group relative rounded-[2rem] pt-20 pb-10 px-8 text-center transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${story.theme === 'dark' ? 'bg-[#002B5B] text-white' : 'bg-[#F8F9FA] text-[#002B5B]'}`}>
                 <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28">
@@ -317,7 +328,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* NEW: MORE STORIES FROM COMMUNITIES SECTION */}
+      {/* MORE STORIES FROM COMMUNITIES SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="flex flex-col items-center mb-16">
           <div className="flex items-center gap-4 mb-4">
@@ -332,38 +343,18 @@ const App = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
-            {
-              title: "Little Story of Change",
-              desc: "A young girl quietly entered a learning room carrying her own notebook and began copying lessons from the board. Curiosity became confidence.",
-              img: storyImg1,
-            },
-            {
-              title: "Bangles on the Wrist, Freedom at Fingertips",
-              desc: "When girls learn, they move forward with confidence. Education opens doors, creates choices and brings freedom.",
-              img: storyImg2,
-            },
-            {
-              title: "Story of Prajapat Community",
-              desc: "What began with three girls attending Meri Kitab sessions grew into many children choosing joyful learning spaces within their own community.",
-              img: storyImg3,
-            }
+            { title: "Little Story of Change", desc: "A young girl quietly entered a learning room carrying her own notebook and began copying lessons from the board. Curiosity became confidence.", img: storyImg1 },
+            { title: "Bangles on the Wrist, Freedom at Fingertips", desc: "When girls learn, they move forward with confidence. Education opens doors, creates choices and brings freedom.", img: storyImg2 },
+            { title: "Story of Prajapat Community", desc: "What began with three girls attending Meri Kitab sessions grew into many children choosing joyful learning spaces within their own community.", img: storyImg3 }
           ].map((story, index) => (
             <div key={index} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-[#002B5B]/5">
               <div className="h-56 overflow-hidden relative">
-                <img 
-                  src={story.img} 
-                  alt={story.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
+                <img src={story.img} alt={story.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#002B5B]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div className="p-8">
-                <h3 className="text-xl font-black text-[#002B5B] mb-4 leading-tight">
-                  {story.title}
-                </h3>
-                <p className="text-[#002B5B] text-[15px] font-bold leading-relaxed mb-6">
-                  {story.desc}
-                </p>
+                <h3 className="text-xl font-black text-[#002B5B] mb-4 leading-tight">{story.title}</h3>
+                <p className="text-[#002B5B] text-[15px] font-bold leading-relaxed mb-6">{story.desc}</p>
                 <button className="flex items-center gap-2 text-[#002B5B] font-black text-[10px] uppercase tracking-widest group/btn">
                   Read Full Story 
                   <ArrowUpRight size={14} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
